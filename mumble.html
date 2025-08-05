@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mumble - Rich Text Editor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      border-bottom: 1px solid #333;
+    }
+
+    #toolbar {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+
+    button {
+      background-color: #333;
+      color: #eee;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    #editor {
+      padding: 1rem;
+      height: calc(100vh - 140px);
+      overflow-y: auto;
+      outline: none;
+      font-size: 1rem;
+      line-height: 1.6;
+      background-color: #121212;
+    }
+
+    footer {
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      border-top: 1px solid #333;
+      background-color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Mumble 📝</header>
+
+  <div id="toolbar">
+    <button onclick="execCmd('bold')">Bold</button>
+    <button onclick="execCmd('italic')">Italic</button>
+    <button onclick="execCmd('underline')">Underline</button>
+    <button onclick="saveFile()">Save</button>
+  </div>
+
+  <div id="editor" contenteditable="true">
+   write
+  </div>
+
+  <footer>Made with quiet rebellion ✨</footer>
+
+  <script>
+    function execCmd(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function saveFile() {
+      const content = document.getElementById('editor').innerHTML;
+      const blob = new Blob([content], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'rename.txt';
+      a.click();
+    }
+  </script>
+
+</body>
+<script>
+  function saveText() {
+    const content = document.getElementById('editor').innerHTML;
+    const blob = new Blob([content], { type: 'text/html' });
+
+    const filename = prompt("Enter file name:", "mumble.html");
+    if (!filename) return;
+
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  }
+</script>
+</html>
+
